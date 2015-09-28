@@ -1,7 +1,5 @@
 require_relative 'minitest_helper'
 
-require 'minitest/autorun'
-
 class TestException < Exception ; end
 
 class TestErrant < Minitest::Test
