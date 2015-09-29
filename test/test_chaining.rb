@@ -23,6 +23,17 @@ class TestChaining < Minitest::Test
     assert_equal @expected_message, result
   end
 
+  def test_failing_chain_halts
+    uncaught_error = Class.new(Exception)
+
+    result = simple_chain
+      .map { |_| fail @expected_message }
+      .map { |_| raise uncaught_error.new }
+
+    assert_kind_of Errant::Failure, result
+    assert_equal @expected_message, result.value.message
+  end
+
   def test_successful_map_error
     result = simple_chain.map_error { |e| "this shouldn't happen" }
     assert_equal simple_chain.value, result.value

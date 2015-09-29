@@ -34,8 +34,22 @@ class Failure < Result
     false
   end
 
+  def to_a
+    []
+  end
+
+  def to_ary
+    signal
+  end
+
   def self.[](value)
     Failure.new(value)
+  end
+
+  private
+
+  def signal
+    raise FailureSignal.new(self)
   end
 end
 end

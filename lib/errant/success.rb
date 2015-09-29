@@ -13,6 +13,8 @@ class Success < Result
         res.respond_to?(:each) ? __copy[res.first] : __copy[res]
       rescue *exceptions => e
         Failure[e]
+      rescue FailureSignal => signal
+        signal.failure
       end
     end
   end
@@ -42,6 +44,7 @@ class Success < Result
   def to_a
     __enumerable_value
   end
+  alias_method :to_ary, :to_a
 
   def [](value)
     @value = value
