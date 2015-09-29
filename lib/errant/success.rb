@@ -1,11 +1,9 @@
-require_relative "../errant"
-
 module Errant
-class Success
+class Success < Result
   attr_reader :exceptions, :value
 
   def initialize(*exceptions)
-    @exceptions = exceptions
+    super
   end
 
   ([:each] + Enumerable.instance_methods).each do |enumerable_method|
@@ -35,10 +33,6 @@ class Success
 
   def or_else(&blk)
     value
-  end
-
-  def postprocess_error(&blk)
-    Failure.new(yield(value))
   end
 
   def successful?

@@ -1,5 +1,5 @@
 module Errant
-class Failure
+class Failure < Result
   attr_reader :value
 
   def initialize(value)
