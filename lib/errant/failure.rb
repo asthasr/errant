@@ -1,9 +1,10 @@
 module Errant
 class Failure < Result
-  attr_reader :value
+  attr_reader :exceptions, :value
 
-  def initialize(value)
-    @value = value    
+  def initialize(value, exc = Result::DEFAULT_EXCEPTIONS)
+    @value = value
+    @exceptions = exc
   end
 
   def method_missing(name, *args, &block)
@@ -42,8 +43,8 @@ class Failure < Result
     signal
   end
 
-  def self.[](value)
-    Failure.new(value)
+  def self.[](value, exc = Result::DEFAULT_EXCEPTIONS)
+    Failure.new(value, exc)
   end
 
   private

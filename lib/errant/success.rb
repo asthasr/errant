@@ -12,7 +12,7 @@ class Success < Result
         res = __enumerable_value.send(enumerable_method, *args, &block)
         res.respond_to?(:each) ? __copy[res.first] : __copy[res]
       rescue *exceptions => e
-        Failure[e]
+        Failure[e, exceptions]
       rescue FailureSignal => signal
         signal.failure
       end
